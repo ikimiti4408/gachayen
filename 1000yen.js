@@ -27,6 +27,8 @@ const main = () => {
     for (let i = 0; i < v.length; i++) {
         const [name, price] = v[i].split(',');
         if (name.substr(0,1) == '#') continue;
+        if (name.substr(0,1) == '') continue;
+        if (parseInt(price) == 0) continue;
         const id = i;
         const fd = new FoodData(id, name, parseInt(price));
         allFoodData.push(fd);
@@ -49,12 +51,14 @@ const main = () => {
         output.push(addData);
         now -= addData.price;
     }
-
+    let sm = 0;
     for (let i = 0; i < output.length; i++) {
         const fd = idFoodData[output[i].id];
         console.log(`${fd.name} ${fd.price}`);
+        sm += fd.price;
         document.getElementById('outputtable').innerHTML +=  `<tr><td>${i+1}</td><td>${fd.name}</td> <td>${fd.price}円</td></tr>`;
     }
+    document.getElementById('totalarea').textContent = sm;
 };
 
 document.getElementById('runbtn').addEventListener('click', main);
