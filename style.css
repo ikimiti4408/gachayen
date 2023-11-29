@@ -8,6 +8,10 @@ textarea{
     width: 90vw;
 }
 
+#hiddenbtn {
+    background-color: darkgray;
+}
+
 @media (prefers-color-scheme: dark) {
     :root {
       --nc-tx-1: #000000;

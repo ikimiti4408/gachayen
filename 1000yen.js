@@ -62,3 +62,10 @@ const main = () => {
 };
 
 document.getElementById('runbtn').addEventListener('click', main);
+
+let is_hidden = false;
+document.getElementById('hiddenbtn').addEventListener('click', () => {
+    document.getElementById('outputarea').style.height = (is_hidden ? '40vh' : '80vh') ;
+    document.getElementById('menua').style.display = (is_hidden ? 'block' : 'none');
+    is_hidden = !is_hidden;
+});
