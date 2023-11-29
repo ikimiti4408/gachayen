@@ -12,9 +12,29 @@ function comp(f1, f2) {
     return 0;
 }
 
+let is_hidden = false;
+
+/**
+ * @param {Number} mode [-1]:現在の設定に基づく(default) [0]:表示にする [1]:非表示
+ */
+function change_hidden(mode = -1) {
+    console.log("hidden" + mode);
+    if (mode == -1) {
+        document.getElementById('outputarea').style.height = (is_hidden ? '40vh' : '80vh');
+        document.getElementById('menua').style.display = (is_hidden ? 'block' : 'none');
+        is_hidden = !is_hidden;
+    }
+    else {
+        document.getElementById('outputarea').style.height = (mode == 0 ? '40vh' : '80vh');
+        document.getElementById('menua').style.display = (mode == 0 ? 'block' : 'none');
+        is_hidden = (mode == 0 ? false : true);
+    }
+}
+
+
 v = [];
 
-const main = () => {
+function main() {
     document.getElementById('outputtable').innerHTML = '';
     let texts = document.getElementById('menua').value;
     v = texts.split('\n');
@@ -26,8 +46,8 @@ const main = () => {
 
     for (let i = 0; i < v.length; i++) {
         const [name, price] = v[i].split(',');
-        if (name.substr(0,1) == '#') continue;
-        if (name.substr(0,1) == '') continue;
+        if (name.substr(0, 1) == '#') continue;
+        if (name.substr(0, 1) == '') continue;
         if (parseInt(price) == 0) continue;
         const id = i;
         const fd = new FoodData(id, name, parseInt(price));
@@ -56,16 +76,16 @@ const main = () => {
         const fd = idFoodData[output[i].id];
         console.log(`${fd.name} ${fd.price}`);
         sm += fd.price;
-        document.getElementById('outputtable').innerHTML +=  `<tr><td>${i+1}</td><td>${fd.name}</td> <td>${fd.price}円</td></tr>`;
+        document.getElementById('outputtable').innerHTML += `<tr><td>${i + 1}</td><td>${fd.name}</td> <td>${fd.price}円</td></tr>`;
     }
     document.getElementById('totalarea').textContent = sm;
+    change_hidden(1);
 };
 
-document.getElementById('runbtn').addEventListener('click', main);
+document.getElementById('runbtn').addEventListener('click', () => {
+    main();
+});
 
-let is_hidden = false;
 document.getElementById('hiddenbtn').addEventListener('click', () => {
-    document.getElementById('outputarea').style.height = (is_hidden ? '40vh' : '80vh') ;
-    document.getElementById('menua').style.display = (is_hidden ? 'block' : 'none');
-    is_hidden = !is_hidden;
+    change_hidden(-1);
 });
